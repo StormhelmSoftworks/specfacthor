@@ -1,6 +1,6 @@
 require 'specfac'
 require 'thor'
-module Specfac
+module SpecFac
   class CLI < Thor
     # ...
   end
