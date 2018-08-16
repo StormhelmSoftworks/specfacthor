@@ -8,12 +8,15 @@ module SpecFac
 
     ######### AVAILABLE COMMANDS
     desc "generate [controller] [actions]", "generates tests for specified actions"
-    def generate(controller, actions)
+    def generate(*args)
       @working_dir = "spec/controllers"
       @protected_methods = %w(define_utils_methods_params si si_ca pl)
       @found_methods = SpecModule.methods(false).to_a.map {|item| item.to_s}
       @available_methods = @found_methods - @protected_methods
       @working_file = nil
+
+      controller = args.shift
+      actions = args
       sanitize(controller, actions)
     end
 
@@ -52,16 +55,16 @@ module SpecFac
       end
 
       def sanitize(controller, actions)
+
         rem = "_controller"
         if controller.include? "_controller"
           controller.gsub!(rem, "")
           # puts controller
         end
-        if actions == "ALL"
+        if actions.include?("ALL")
           matched_actions = @available_methods
         else
           matched_actions = []
-          actions = actions.split(" ")
           actions.each {|action| matched_actions << action if @available_methods.include?(action)}
         end
 
