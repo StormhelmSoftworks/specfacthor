@@ -2,10 +2,16 @@ require 'specfac'
 require 'thor'
 module SpecFac
   class CLI < Thor
+    include SpecModule
+    attr_accessor :working_dir, :working_file, :protected_methods, :available_methods, :found_methods
+
+    ######### AVAILABLE COMMANDS
     desc "generate [actions]", "generates tests for specified actions"
     def generate(actions)
 
     end
+
+    ######## UTILITY METHODS
 
     def pull_src(controller, actions)
       if !Dir.exists?(@working_dir)
