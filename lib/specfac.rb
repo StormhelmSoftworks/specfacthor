@@ -1,5 +1,7 @@
-require "specfac/version"
-
+require 'specfac'
+require 'thor'
 module Specfac
-  # Your code goes here...
+  class CLI < Thor
+    # ...
+  end
 end
