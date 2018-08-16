@@ -54,5 +54,7 @@ module SpecFac
       # p matched_actions
       pull_src(controller, matched_actions)
     end
+
+    remove_command :pull_src, :sanitize
   end
 end
