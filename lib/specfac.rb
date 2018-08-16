@@ -13,6 +13,7 @@ module SpecFac
       @found_methods = SpecModule.methods(false).to_a.map {|item| item.to_s}
       @available_methods = @found_methods - @protected_methods
       @working_file = nil
+      sanitize(controller, actions)
     end
 
     ######## UTILITY METHODS
