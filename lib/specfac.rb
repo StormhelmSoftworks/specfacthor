@@ -6,8 +6,8 @@ module SpecFac
     attr_accessor :working_dir, :working_file, :protected_methods, :available_methods, :found_methods
 
     ######### AVAILABLE COMMANDS
-    desc "generate [actions]", "generates tests for specified actions"
-    def generate(actions)
+    desc "generate [controller] [actions]", "generates tests for specified actions"
+    def generate(controller, actions)
       @working_dir = "spec/controllers"
       @protected_methods = %w(define_utils_methods_params si si_ca pl)
       @found_methods = SpecModule.methods(false).to_a.map {|item| item.to_s}
