@@ -8,7 +8,11 @@ module SpecFac
     ######### AVAILABLE COMMANDS
     desc "generate [actions]", "generates tests for specified actions"
     def generate(actions)
-
+      @working_dir = "spec/controllers"
+      @protected_methods = %w(define_utils_methods_params si si_ca pl)
+      @found_methods = SpecModule.methods(false).to_a.map {|item| item.to_s}
+      @available_methods = @found_methods - @protected_methods
+      @working_file = nil
     end
 
     ######## UTILITY METHODS
