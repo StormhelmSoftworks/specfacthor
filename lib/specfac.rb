@@ -39,6 +39,18 @@ module SpecFac
 
       end
 
+      def opener(mode, lines)
+        filer = lambda {|type, output| File.open(@working_file, type) { |handle| handle.puts output}}
+        if mode == "header"
+          filer.call("w", nil)
+          lines.each do |item|
+            filer.call("a", item)
+          end
+        else
+          filer.call("a", lines)
+        end
+      end
+
       def sanitize(controller, actions)
         rem = "_controller"
         if controller.include? "_controller"
