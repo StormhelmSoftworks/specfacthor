@@ -39,17 +39,17 @@ __[actions]__ should be the names of methods to be generated
 
 An example usage for specific tests:
 
-    specfac participants index show
+    specfac generate participants index show
     
 An example for all available tests:
     
-    specfac participants ALL
+    specfac generate participants ALL
     
 Currently, tests can be generated for :index, :show, :new, :create, :edit, :update, and :destroy.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/viktharien/specfactor.
+Bug reports and pull requests are welcome on GitHub at https://github.com/viktharien/specfacthor.
 
 ## License
 
