@@ -2,20 +2,6 @@ require 'active_support'
 require 'active_support/core_ext/string'
 
 module Utils
-
-
-  def self.pluralize(string)
-    return ActiveSupport::Inflector.pluralize(string)
-  end
-
-  def self.singularize(string)
-    return ActiveSupport::Inflector.singularize(string)
-  end
-
-end
-module SpecModule
-  include Utils
-
   @@term = nil
 
   def self.define_utils_methods_params(term)
@@ -34,16 +20,30 @@ module SpecModule
     Utils.pluralize(@@term)
   end
 
+  def self.pluralize(string)
+    return ActiveSupport::Inflector.pluralize(string)
+  end
+
+  def self.singularize(string)
+    return ActiveSupport::Inflector.singularize(string)
+  end
+
+end
+module Utils
+  include Utils
+
+
+
   def self.index
     "describe 'GET #index' do
       it 'returns http success' do
         get :index
         expect(response).to have_http_status(:success)
       end
-      it 'assigns @#{SpecModule.pl} to #{SpecModule.si_ca}.all' do
-        #{SpecModule.si} = create(:#{SpecModule.si})
+      it 'assigns @#{Utils.pl} to #{Utils.si_ca}.all' do
+        #{Utils.si} = create(:#{Utils.si})
         get :index
-        expect(assigns(:#{SpecModule.pl})).to eq([#{SpecModule.si}])
+        expect(assigns(:#{Utils.pl})).to eq([#{Utils.si}])
       end
     end"
   end
@@ -51,14 +51,14 @@ module SpecModule
   def self.show
     "describe 'GET #show' do
       it 'returns http success' do
-        #{SpecModule.si} = create(:#{SpecModule.si})
-        get :show, params: {id: #{SpecModule.si}.to_param}
+        #{Utils.si} = create(:#{Utils.si})
+        get :show, params: {id: #{Utils.si}.to_param}
         expect(response).to have_http_status(:success)
       end
-      it 'assigns @#{SpecModule.si} to a #{SpecModule.si_ca}' do
-        #{SpecModule.si} = create(:#{SpecModule.si})
-        get :show, params: {id: #{SpecModule.si}.to_param}
-        expect(assigns(:#{SpecModule.si})).to eq(#{SpecModule.si})
+      it 'assigns @#{Utils.si} to a #{Utils.si_ca}' do
+        #{Utils.si} = create(:#{Utils.si})
+        get :show, params: {id: #{Utils.si}.to_param}
+        expect(assigns(:#{Utils.si})).to eq(#{Utils.si})
       end
     end"
   end
@@ -69,38 +69,38 @@ module SpecModule
         get :new
         expect(response).to have_http_status(:success)
       end
-      it 'assigns @#{SpecModule.si} to a new #{SpecModule.si_ca}' do
-        #{SpecModule.si} = create(:#{SpecModule.si})
-        get :new, params: {id: #{SpecModule.si}.to_param}
-        expect(assigns(:#{SpecModule.si})).to be_a_new(#{SpecModule.si_ca})
+      it 'assigns @#{Utils.si} to a new #{Utils.si_ca}' do
+        #{Utils.si} = create(:#{Utils.si})
+        get :new, params: {id: #{Utils.si}.to_param}
+        expect(assigns(:#{Utils.si})).to be_a_new(#{Utils.si_ca})
       end
     end"
   end
 
   def self.create
     "describe 'POST #create' do
-      let(:#{SpecModule.si}) {create(:#{SpecModule.si})}
-      let(:valid_attributes) { attributes_for(:#{SpecModule.si} )}
-      let(:invalid_attributes) { attributes_for(:invalid_#{SpecModule.si}_attrs)}
-      it 'creates a new #{SpecModule.si}' do
+      let(:#{Utils.si}) {create(:#{Utils.si})}
+      let(:valid_attributes) { attributes_for(:#{Utils.si} )}
+      let(:invalid_attributes) { attributes_for(:invalid_#{Utils.si}_attrs)}
+      it 'creates a new #{Utils.si}' do
         expect{
-          post :create, params: {#{SpecModule.si}: valid_attributes}
-        }.to change(#{SpecModule.si_ca}, :count).by(1)
+          post :create, params: {#{Utils.si}: valid_attributes}
+        }.to change(#{Utils.si_ca}, :count).by(1)
       end
       it 'redirects on save' do
-        post :create, params: {#{SpecModule.si}: valid_attributes}
-        expect(response).to redirect_to(#{SpecModule.pl}_path)
+        post :create, params: {#{Utils.si}: valid_attributes}
+        expect(response).to redirect_to(#{Utils.pl}_path)
       end
       it 'renders a flash message on save' do
-        post :create, params: {#{SpecModule.si}: valid_attributes}
+        post :create, params: {#{Utils.si}: valid_attributes}
         expect(flash[:notice]).to be_present
       end
-      it 'fails to create a new #{SpecModule.si}' do
-        expect(build(:invalid_#{SpecModule.si}_attrs)).to be_invalid
+      it 'fails to create a new #{Utils.si}' do
+        expect(build(:invalid_#{Utils.si}_attrs)).to be_invalid
       end
-      it 'redirects to new template on failure to save new #{SpecModule.si}' do
-        post :create, params: {#{SpecModule.si}: invalid_attributes}
-        expect(response).to redirect_to(new_#{SpecModule.si}_path)
+      it 'redirects to new template on failure to save new #{Utils.si}' do
+        post :create, params: {#{Utils.si}: invalid_attributes}
+        expect(response).to redirect_to(new_#{Utils.si}_path)
       end
     end"
   end
@@ -108,70 +108,70 @@ module SpecModule
   def self.edit
     "describe 'GET #edit' do
       it 'returns http success' do
-        #{SpecModule.si} = create(:#{SpecModule.si})
-        get :edit, params: {id: #{SpecModule.si}.to_param}
+        #{Utils.si} = create(:#{Utils.si})
+        get :edit, params: {id: #{Utils.si}.to_param}
         expect(response).to have_http_status(:success)
       end
-      it 'assigns @#{SpecModule.si} to a #{SpecModule.si_ca}' do
-        #{SpecModule.si} = create(:#{SpecModule.si})
-        get :edit, params: {id: #{SpecModule.si}.to_param}
-        expect(assigns(:#{SpecModule.si})).to eq(#{SpecModule.si})
+      it 'assigns @#{Utils.si} to a #{Utils.si_ca}' do
+        #{Utils.si} = create(:#{Utils.si})
+        get :edit, params: {id: #{Utils.si}.to_param}
+        expect(assigns(:#{Utils.si})).to eq(#{Utils.si})
       end
     end"
   end
 
   def self.update
     "describe 'POST #update' do
-      let(:#{SpecModule.si}) {create(:#{SpecModule.si})}
-      let(:valid_attributes) { attributes_for(:#{SpecModule.si} )}
-      let(:new_attributes) { attributes_for(:updated_#{SpecModule.si})}
-      let(:invalid_attributes) { attributes_for(:invalid_#{SpecModule.si}_attrs)}
-      it 'updates attributes for #{SpecModule.si}' do
-        patch :update, params: {id: #{SpecModule.si}.to_param,#{SpecModule.si}: new_attributes}
-        #{SpecModule.si}.reload
-        # expect(#{SpecModule.si}.name).to eq('test2')
-        # expect(#{SpecModule.si}.points).to eq(800)
+      let(:#{Utils.si}) {create(:#{Utils.si})}
+      let(:valid_attributes) { attributes_for(:#{Utils.si} )}
+      let(:new_attributes) { attributes_for(:updated_#{Utils.si})}
+      let(:invalid_attributes) { attributes_for(:invalid_#{Utils.si}_attrs)}
+      it 'updates attributes for #{Utils.si}' do
+        patch :update, params: {id: #{Utils.si}.to_param,#{Utils.si}: new_attributes}
+        #{Utils.si}.reload
+        # expect(#{Utils.si}.name).to eq('test2')
+        # expect(#{Utils.si}.points).to eq(800)
       end
       it 'redirects on update' do
-        patch :update, params: {id: #{SpecModule.si}.to_param,#{SpecModule.si}: new_attributes}
-        expect(response).to redirect_to(#{SpecModule.si}s_path)
+        patch :update, params: {id: #{Utils.si}.to_param,#{Utils.si}: new_attributes}
+        expect(response).to redirect_to(#{Utils.si}s_path)
       end
       it 'renders a flash message on update' do
-        patch :update, params: {id: #{SpecModule.si}.to_param,#{SpecModule.si}: new_attributes}
+        patch :update, params: {id: #{Utils.si}.to_param,#{Utils.si}: new_attributes}
         expect(flash[:notice]).to be_present
       end
       it 'renders a flash message on failure to update' do
-        patch :update, params: {id: #{SpecModule.si}.to_param,#{SpecModule.si}: invalid_attributes}
+        patch :update, params: {id: #{Utils.si}.to_param,#{Utils.si}: invalid_attributes}
         expect(flash[:alert]).to be_present
       end
-      it 'fails to update #{SpecModule.si}' do
-        expect(build(:invalid_#{SpecModule.si}_attrs)).to be_invalid
+      it 'fails to update #{Utils.si}' do
+        expect(build(:invalid_#{Utils.si}_attrs)).to be_invalid
       end
-      it 'redirects to edit template on failure to update #{SpecModule.si}' do
-        patch :update, params: {id: #{SpecModule.si}.to_param,#{SpecModule.si}: invalid_attributes}
-        expect(response).to redirect_to(edit_#{SpecModule.si}_path(#{SpecModule.si}))
+      it 'redirects to edit template on failure to update #{Utils.si}' do
+        patch :update, params: {id: #{Utils.si}.to_param,#{Utils.si}: invalid_attributes}
+        expect(response).to redirect_to(edit_#{Utils.si}_path(#{Utils.si}))
       end
     end"
   end
 
   def self.destroy
     "describe 'DELETE #destroy' do
-      let(:#{SpecModule.si}) {build(:#{SpecModule.si})}
-      it 'destroys a #{SpecModule.si}' do
-        #{SpecModule.si}.save
+      let(:#{Utils.si}) {build(:#{Utils.si})}
+      it 'destroys a #{Utils.si}' do
+        #{Utils.si}.save
         expect {
-          delete :destroy, params: {id: #{SpecModule.si}.to_param }
-        }.to change(#{SpecModule.si_ca}, :count).by(-1)
+          delete :destroy, params: {id: #{Utils.si}.to_param }
+        }.to change(#{Utils.si_ca}, :count).by(-1)
       end
       it 'renders a flash message after delete' do
-        #{SpecModule.si}.save
-        delete :destroy, params: {id: #{SpecModule.si}.to_param }
+        #{Utils.si}.save
+        delete :destroy, params: {id: #{Utils.si}.to_param }
         expect(flash[:notice]).to be_present
       end
-      it 'redirects to #{SpecModule.si}s_path after destroy' do
-        #{SpecModule.si}.save
-        delete :destroy, params: {id: #{SpecModule.si}.to_param }
-        expect(response).to redirect_to(#{SpecModule.si}s_path)
+      it 'redirects to #{Utils.si}s_path after destroy' do
+        #{Utils.si}.save
+        delete :destroy, params: {id: #{Utils.si}.to_param }
+        expect(response).to redirect_to(#{Utils.si}s_path)
       end
     end"
   end
