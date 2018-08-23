@@ -29,7 +29,7 @@ module Utils
   end
 
 end
-module Utils
+module SpecModule
   include Utils
 
 
