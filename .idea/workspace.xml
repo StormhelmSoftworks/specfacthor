@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9c170d0c-08bf-4830-a863-b6dfc3a02d09" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/factory/spec_module.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/factory/spec_module.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/factory/spec_module.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/spec_module.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/specfac.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/specfac.rb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,10 +35,15 @@
       <file leaf-file-name="specfac.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/specfac.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="244">
-              <caret line="30" column="61" selection-start-line="30" selection-start-column="61" selection-end-line="30" selection-end-column="61" />
+            <state relative-caret-position="30">
+              <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="yammos_controller_spec.rb" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/spec/controllers/yammos_controller_spec.rb">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
@@ -65,10 +68,10 @@
         </entry>
       </file>
       <file leaf-file-name="spec_module.rb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/factory/spec_module.rb">
+        <entry file="file://$PROJECT_DIR$/lib/spec_module.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="312">
-              <caret line="37" column="29" lean-forward="true" selection-start-line="37" selection-start-column="29" selection-end-line="37" selection-end-column="29" />
+              <caret line="37" column="29" selection-start-line="37" selection-start-column="29" selection-end-line="37" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -141,13 +144,18 @@
               <item name="specfac" type="b2602c69:ProjectViewProjectNode" />
               <item name="specfac" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="factory" type="462c0819:PsiDirectoryNode" />
+              <item name="specfac" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="specfac" type="b2602c69:ProjectViewProjectNode" />
               <item name="specfac" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="spec" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="specfac" type="b2602c69:ProjectViewProjectNode" />
               <item name="specfac" type="462c0819:PsiDirectoryNode" />
+              <item name="spec" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -194,18 +202,18 @@
       <workItem from="1534450332680" duration="4232000" />
       <workItem from="1534944836242" duration="417000" />
       <workItem from="1534945842456" duration="1238000" />
-      <workItem from="1535055366512" duration="2879000" />
+      <workItem from="1535055366512" duration="3097000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8766000" />
+    <option name="totallyTimeSpent" value="8984000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="797" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26037195" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26037195" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
@@ -214,7 +222,7 @@
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -264,7 +272,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/factory/spec_module.rb">
+    <entry file="file://$PROJECT_DIR$/lib/spec_module.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2700">
           <caret line="180" selection-start-line="180" selection-end-line="180" />
@@ -304,7 +312,7 @@
     <entry file="file://$PROJECT_DIR$/spec/controllers/rabbits_controller_spec.rb" />
     <entry file="file://$PROJECT_DIR$/spec/spec_helper.rb" />
     <entry file="file://$PROJECT_DIR$/spec/controllers/tests_controller_spec.rb" />
-    <entry file="file://$PROJECT_DIR$/lib/factory/spec_module.rb">
+    <entry file="file://$PROJECT_DIR$/lib/spec_module.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2700">
           <caret line="180" selection-start-line="180" selection-end-line="180" />
@@ -347,7 +355,7 @@
     <entry file="file://$PROJECT_DIR$/spec/controllers/rabbits_controller_spec.rb" />
     <entry file="file://$PROJECT_DIR$/spec/spec_helper.rb" />
     <entry file="file://$PROJECT_DIR$/spec/controllers/tests_controller_spec.rb" />
-    <entry file="file://$PROJECT_DIR$/lib/factory/spec_module.rb">
+    <entry file="file://$PROJECT_DIR$/lib/spec_module.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2700">
           <caret line="180" selection-start-line="180" selection-end-line="180" />
@@ -407,17 +415,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/factory/spec_module.rb">
+    <entry file="file://$PROJECT_DIR$/lib/spec_module.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="312">
-          <caret line="37" column="29" lean-forward="true" selection-start-line="37" selection-start-column="29" selection-end-line="37" selection-end-column="29" />
+          <caret line="37" column="29" selection-start-line="37" selection-start-column="29" selection-end-line="37" selection-end-column="29" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/spec/controllers/yammos_controller_spec.rb">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/specfac.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
-          <caret line="30" column="61" selection-start-line="30" selection-start-column="61" selection-end-line="30" selection-end-column="61" />
+        <state relative-caret-position="30">
+          <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
         </state>
       </provider>
     </entry>

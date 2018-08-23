@@ -1,6 +1,6 @@
 require 'specfac'
 require 'thor'
-require 'factory/spec_module'
+require 'spec_module'
 module SpecFac
   class CLI < Thor
     include Utils
