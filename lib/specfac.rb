@@ -3,6 +3,7 @@ require 'thor'
 require 'factory/spec_module'
 module SpecFac
   class CLI < Thor
+    include Utils
     include SpecModule
     attr_accessor :working_dir, :working_file, :protected_methods, :available_methods, :found_methods
 
@@ -10,9 +11,9 @@ module SpecFac
     desc "generate [controller] [actions]", "generates tests for specified actions"
     def generate(*args)
       @working_dir = "spec/controllers"
-      @protected_methods = %w(define_utils_methods_params si si_ca pl)
+      # @protected_methods = %w(define_utils_methods_params si si_ca pl)
       @found_methods = SpecModule.methods(false).to_a.map {|item| item.to_s}
-      @available_methods = @found_methods - @protected_methods
+      @available_methods = @found_methods # @found_methods - @protected_methods
       @working_file = nil
 
       controller = args.shift
@@ -36,7 +37,7 @@ module SpecFac
             ["require 'rails_helper'","RSpec.describe #{controller.capitalize}Controller, type: :controller do"]
         )
         # p actions
-        SpecModule.define_utils_methods_params(controller)
+        Utils.define_utils_methods_params(controller)
         actions != nil ? actions.each {|action| opener("body", SpecModule.public_send(action.to_sym))} : nil
         opener("end", "end")
 

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9c170d0c-08bf-4830-a863-b6dfc3a02d09" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/factory/spec_module.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/factory/spec_module.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/specfac.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/specfac.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/specfac/version.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/specfac/version.rb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -35,8 +35,8 @@
       <file leaf-file-name="specfac.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/specfac.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="990">
-              <caret line="66" column="30" selection-start-line="66" selection-start-column="30" selection-end-line="66" selection-end-column="30" />
+            <state relative-caret-position="121">
+              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
             </state>
           </provider>
         </entry>
@@ -53,7 +53,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="version.rb" pinned="false" current-in-tab="false">
+      <file leaf-file-name="version.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/specfac/version.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="15">
@@ -62,7 +62,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="spec_module.rb" pinned="false" current-in-tab="true">
+      <file leaf-file-name="spec_module.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/factory/spec_module.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="210">
@@ -92,10 +92,10 @@
         <option value="$PROJECT_DIR$/exe/specfac" />
         <option value="$PROJECT_DIR$/specfac.gemspec" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/lib/specfac.rb" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/lib/specfac/version.rb" />
         <option value="$PROJECT_DIR$/lib/factory/spec_module.rb" />
+        <option value="$PROJECT_DIR$/lib/specfac.rb" />
+        <option value="$PROJECT_DIR$/lib/specfac/version.rb" />
       </list>
     </option>
   </component>
@@ -192,12 +192,12 @@
       <workItem from="1534450332680" duration="4232000" />
       <workItem from="1534944836242" duration="417000" />
       <workItem from="1534945842456" duration="1238000" />
-      <workItem from="1535055366512" duration="1038000" />
+      <workItem from="1535055366512" duration="1249000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6925000" />
+    <option name="totallyTimeSpent" value="7136000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="797" extended-state="0" />
@@ -387,13 +387,6 @@
     <entry file="file://$PROJECT_DIR$/spec/controllers/tests_controller_spec.rb" />
     <entry file="file://$PROJECT_DIR$/spec/controllers/rabbits_controller_spec.rb" />
     <entry file="file://$PROJECT_DIR$/spec/controllers/robots_controller_spec.rb" />
-    <entry file="file://$PROJECT_DIR$/lib/specfac.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="990">
-          <caret line="66" column="30" selection-start-line="66" selection-start-column="30" selection-end-line="66" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/spec/controllers/yoddels_controller_spec.rb" />
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -405,17 +398,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/specfac/version.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/factory/spec_module.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="14" column="16" lean-forward="true" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/specfac.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/specfac/version.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
         </state>
       </provider>
     </entry>
