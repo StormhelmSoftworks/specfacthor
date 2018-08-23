@@ -1,18 +1,21 @@
 require 'specfac'
 require 'thor'
-require 'factory/spec_module'
+require 'spec_module'
 module SpecFac
   class CLI < Thor
+    include Utils
     include SpecModule
-    attr_accessor :working_dir, :working_file, :protected_methods, :available_methods, :found_methods
+    attr_accessor :dir_controllers, :dir_factories, :working_dirs, :working_file, :protected_methods, :available_methods, :found_methods
 
     ######### AVAILABLE COMMANDS
     desc "generate [controller] [actions]", "generates tests for specified actions"
     def generate(*args)
-      @working_dir = "spec/controllers"
-      @protected_methods = %w(define_utils_methods_params si si_ca pl)
+      @working_dirs = ["spec", "controllers", "factories"]
+      @dir_controllers = "#{@working_dirs[0]}/#{@working_dirs[1]}"
+      @dir_factories = "#{@working_dirs[0]}/#{@working_dirs[2]}"
+      # @protected_methods = %w(define_utils_methods_params si si_ca pl)
       @found_methods = SpecModule.methods(false).to_a.map {|item| item.to_s}
-      @available_methods = @found_methods - @protected_methods
+      @available_methods = @found_methods # @found_methods - @protected_methods
       @working_file = nil
 
       controller = args.shift
@@ -24,11 +27,14 @@ module SpecFac
     #
 
     no_commands do
+      def create_directories(*dirs)
+        dirs.each {|dir| Dir.mkdir(dir) if !Dir.exists?(dir) }
+
+      end
+
       def pull_src(controller, actions)
-        if !Dir.exists?(@working_dir)
-          Dir.mkdir(@working_dir)
-        end
-        @working_file = "#{@working_dir}/#{controller.downcase}_controller_spec.rb"
+        create_directories(@working_dirs[0], @dir_controllers, @dir_factories)
+        @working_file = "#{@dir_controllers}/#{controller.downcase}_controller_spec.rb"
         # Header stuff
 
         opener(
@@ -36,7 +42,7 @@ module SpecFac
             ["require 'rails_helper'","RSpec.describe #{controller.capitalize}Controller, type: :controller do"]
         )
         # p actions
-        SpecModule.define_utils_methods_params(controller)
+        Utils.define_utils_methods_params(controller)
         actions != nil ? actions.each {|action| opener("body", SpecModule.public_send(action.to_sym))} : nil
         opener("end", "end")
 
