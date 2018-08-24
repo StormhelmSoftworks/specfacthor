@@ -1,14 +1,17 @@
 require 'specfac'
 require 'thor'
 require 'spec_module'
+require 'factory_module'
 module SpecFac
   class CLI < Thor
     include Utils
     include SpecModule
+    include FactoryModule
     attr_accessor :dir_controllers, :dir_factories, :working_dirs, :working_file, :protected_methods, :available_methods, :found_methods
 
     ######### AVAILABLE COMMANDS
     desc "generate [controller] [actions]", "generates tests for specified actions"
+    option :f, :type => :boolean
     def generate(*args)
       @working_dirs = ["spec", "controllers", "factories"]
       @dir_controllers = "#{@working_dirs[0]}/#{@working_dirs[1]}"
@@ -20,7 +23,23 @@ module SpecFac
 
       controller = args.shift
       actions = args
-      sanitize(controller, actions)
+
+
+
+
+      if controller
+        sanitize(controller, actions)
+      else
+        puts "Please provide a controller name."
+        exit
+      end
+
+      # Factories
+
+      if options[:f]
+        controller != nil ? @working_file = "#{@dir_factories}/#{controller.downcase}_spec.rb" : @working_file = "#{@dir_factories}/sample_spec.rb"
+        opener("factory", FactoryModule.create)
+      end
     end
 
     ######## UTILITY METHODS
@@ -35,16 +54,18 @@ module SpecFac
       def pull_src(controller, actions)
         create_directories(@working_dirs[0], @dir_controllers, @dir_factories)
         @working_file = "#{@dir_controllers}/#{controller.downcase}_controller_spec.rb"
-        # Header stuff
+        # Spec tests
 
         opener(
             "header",
             ["require 'rails_helper'","RSpec.describe #{controller.capitalize}Controller, type: :controller do"]
         )
-        # p actions
+
         Utils.define_utils_methods_params(controller)
         actions != nil ? actions.each {|action| opener("body", SpecModule.public_send(action.to_sym))} : nil
         opener("end", "end")
+
+
 
       end
 

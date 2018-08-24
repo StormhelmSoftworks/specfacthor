@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["viktharien"]
   spec.email         = ["viktharien@zoho.com"]
 
-  spec.summary       = %q{Specfac is short for SpecFactor, a CLI for generating rspec controller tests}
+  spec.summary       = %q{SpecFactor is a CLI for generating rspec controller tests. The gem is in a proof-of-concept stage.}
   spec.homepage      = "https://github.com/viktharien/specfacthor"
   spec.license       = "MIT"
 

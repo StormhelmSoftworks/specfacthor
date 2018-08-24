@@ -31,7 +31,7 @@ Or install it yourself as:
 
 In terminal, type:
 
-    specfac [controller] [actions]
+    specfac generate [controller] [actions]
     
 __[controller]__ should be the name of the controller you'd like to generate tests for
 
@@ -44,6 +44,10 @@ An example usage for specific tests:
 An example for all available tests:
     
     specfac generate participants ALL
+    
+An example generating a FactoryBot factory for the controller:
+
+    specfac generate -f dogs ALL
     
 Currently, tests can be generated for :index, :show, :new, :create, :edit, :update, and :destroy.
 
