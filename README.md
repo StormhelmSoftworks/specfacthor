@@ -41,13 +41,21 @@ An example usage for specific tests:
 
     specfac generate participants index show
     
+_This generates spec/controllers/participants_controller_spec.rb with tests for :index and :show_
+    
 An example for all available tests:
     
     specfac generate participants ALL
     
+_This generates spec/controllers/participants_controller_spec.rb with tests for all available methods._
+    
+You can also use the command alias "g" and flags such as -f, which tells specfactor to generate the factory for this spec.
+
 An example generating a FactoryBot factory for the controller:
 
-    specfac generate -f dogs ALL
+    specfac g -f dogs ALL
+    
+_This generates spec/controllers/dogs_controller_spec.rb with tests for all available methods AND generates spec/factories/dogs_spec.rb_
     
 Currently, tests can be generated for :index, :show, :new, :create, :edit, :update, and :destroy.
 
