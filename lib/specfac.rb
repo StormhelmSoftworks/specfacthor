@@ -11,6 +11,7 @@ module SpecFac
 
     ######### AVAILABLE COMMANDS
     desc "generate [controller] [actions]", "generates tests for specified actions"
+    method_option :aliases => "g"
     option :f, :type => :boolean
     def generate(*args)
       @working_dirs = ["spec", "controllers", "factories"]
