@@ -1,34 +1,5 @@
-require 'active_support'
-require 'active_support/core_ext/string'
+require 'specfac_utils'
 
-module Utils
-  @@term = nil
-
-  def self.define_utils_methods_params(term)
-    @@term = term
-  end
-
-  def self.si
-    Utils.singularize(@@term)
-  end
-
-  def self.si_ca
-    Utils.singularize(@@term.capitalize)
-  end
-
-  def self.pl
-    Utils.pluralize(@@term)
-  end
-
-  def self.pluralize(string)
-    return ActiveSupport::Inflector.pluralize(string)
-  end
-
-  def self.singularize(string)
-    return ActiveSupport::Inflector.singularize(string)
-  end
-
-end
 module SpecModule
   include Utils
 
@@ -81,7 +52,7 @@ module SpecModule
     "describe 'POST #create' do
       let(:#{Utils.si}) {create(:#{Utils.si})}
       let(:valid_attributes) { attributes_for(:#{Utils.si} )}
-      let(:invalid_attributes) { attributes_for(:invalid_#{Utils.si}_attrs)}
+      let(:invalid_attributes) { attributes_for(:invalid_#{Utils.si})}
       it 'creates a new #{Utils.si}' do
         expect{
           post :create, params: {#{Utils.si}: valid_attributes}
@@ -96,7 +67,7 @@ module SpecModule
         expect(flash[:notice]).to be_present
       end
       it 'fails to create a new #{Utils.si}' do
-        expect(build(:invalid_#{Utils.si}_attrs)).to be_invalid
+        expect(build(:invalid_#{Utils.si})).to be_invalid
       end
       it 'redirects to new template on failure to save new #{Utils.si}' do
         post :create, params: {#{Utils.si}: invalid_attributes}
@@ -125,11 +96,11 @@ module SpecModule
       let(:#{Utils.si}) {create(:#{Utils.si})}
       let(:valid_attributes) { attributes_for(:#{Utils.si} )}
       let(:new_attributes) { attributes_for(:updated_#{Utils.si})}
-      let(:invalid_attributes) { attributes_for(:invalid_#{Utils.si}_attrs)}
+      let(:invalid_attributes) { attributes_for(:invalid_#{Utils.si})}
       it 'updates attributes for #{Utils.si}' do
         patch :update, params: {id: #{Utils.si}.to_param,#{Utils.si}: new_attributes}
         #{Utils.si}.reload
-        # expect(#{Utils.si}.name).to eq('test2')
+        # expect(#{Utils.si}.name).to eq('example')
         # expect(#{Utils.si}.points).to eq(800)
       end
       it 'redirects on update' do
@@ -145,7 +116,7 @@ module SpecModule
         expect(flash[:alert]).to be_present
       end
       it 'fails to update #{Utils.si}' do
-        expect(build(:invalid_#{Utils.si}_attrs)).to be_invalid
+        expect(build(:invalid_#{Utils.si})).to be_invalid
       end
       it 'redirects to edit template on failure to update #{Utils.si}' do
         patch :update, params: {id: #{Utils.si}.to_param,#{Utils.si}: invalid_attributes}
