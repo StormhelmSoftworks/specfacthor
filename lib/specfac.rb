@@ -10,7 +10,8 @@ module SpecFac
     attr_accessor :dir_controllers, :dir_factories, :working_dirs, :working_file, :protected_methods, :available_methods, :found_methods
 
     ######### AVAILABLE COMMANDS
-    desc "generate [controller] [actions]", "generates tests for specified actions"
+    desc "generate [controller] [actions]", "Generates tests for specified actions. Separate actions with spaces."
+    method_option :aliases => "g"
     option :f, :type => :boolean
     def generate(*args)
       @working_dirs = ["spec", "controllers", "factories"]
@@ -28,18 +29,13 @@ module SpecFac
 
 
       if controller
-        sanitize(controller, actions)
+        sanitize(controller, actions, options[:f])
       else
         puts "Please provide a controller name."
         exit
       end
 
-      # Factories
 
-      if options[:f]
-        controller != nil ? @working_file = "#{@dir_factories}/#{controller.downcase}_spec.rb" : @working_file = "#{@dir_factories}/sample_spec.rb"
-        opener("factory", FactoryModule.create)
-      end
     end
 
     ######## UTILITY METHODS
@@ -51,7 +47,7 @@ module SpecFac
 
       end
 
-      def pull_src(controller, actions)
+      def pull_src(controller, actions, options=nil)
         create_directories(@working_dirs[0], @dir_controllers, @dir_factories)
         @working_file = "#{@dir_controllers}/#{controller.downcase}_controller_spec.rb"
         # Spec tests
@@ -65,23 +61,39 @@ module SpecFac
         actions != nil ? actions.each {|action| opener("body", SpecModule.public_send(action.to_sym))} : nil
         opener("end", "end")
 
+        # Factories
 
+        if options
+          puts
+          @working_file = "#{@dir_factories}/#{controller.downcase}_spec.rb"
+          opener("factory", FactoryModule.create)
+          opener("end", nil)
+        end
 
       end
 
       def opener(mode, lines)
-        filer = lambda {|type, output| File.open(@working_file, type) { |handle| handle.puts output}}
+        filer = lambda do |type, output|
+          File.open(@working_file, type) { |handle| handle.puts output}
+        end
         if mode == "header"
+          puts "Creating spec: #{@working_file}."
           filer.call("w", nil)
           lines.each do |item|
             filer.call("a", item)
           end
+        elsif mode == "factory"
+          puts "Creating factory: #{@working_file}."
+          filer.call("w", lines)
+        elsif mode == "end"
+          puts "> completed"
+          filer.call("a", lines)
         else
           filer.call("a", lines)
         end
       end
 
-      def sanitize(controller, actions)
+      def sanitize(controller, actions, options)
 
         rem = "_controller"
         if controller.include? "_controller"
@@ -96,7 +108,7 @@ module SpecFac
         end
 
         # p matched_actions
-        pull_src(controller, matched_actions)
+        pull_src(controller, matched_actions, options)
       end
     end
 
