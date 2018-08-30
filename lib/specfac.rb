@@ -38,7 +38,7 @@ module Specfac
 
     #-----
     #
-    desc "setup [types] 'i.e. setup factory_bot'", "Generates RailsHelper configuration files for 'factory_bot', 'database_cleaner', and 'capybara'."
+    desc "setup [types] 'i.e. setup factory_bot'", "Generates RailsHelper configuration files for 'factory_bot' and 'database_cleaner'."
     def setup(*args)
       init_vars
       @working_file = "#{@dir_support}/specfac_config.rb"
