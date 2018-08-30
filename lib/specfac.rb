@@ -3,11 +3,13 @@ require 'specfac/version'
 require 'thor'
 require 'spec_module'
 require 'factory_module'
+require 'support_module'
 module Specfac
   class CLI < Thor
     include Utils
     include SpecModule
     include FactoryModule
+    include SupportModule
     attr_accessor :dir_controllers, :dir_factories, :working_dirs, :working_file, :protected_methods, :available_methods, :found_methods
 
     ######### AVAILABLE COMMANDS
@@ -15,13 +17,7 @@ module Specfac
     method_option :aliases => "g"
     option :f, :type => :boolean
     def generate(*args)
-      @working_dirs = ["spec", "controllers", "factories"]
-      @dir_controllers = "#{@working_dirs[0]}/#{@working_dirs[1]}"
-      @dir_factories = "#{@working_dirs[0]}/#{@working_dirs[2]}"
-      # @protected_methods = %w(define_utils_methods_params si si_ca pl)
-      @found_methods = SpecModule.methods(false).to_a.map {|item| item.to_s}
-      @available_methods = @found_methods # @found_methods - @protected_methods
-      @working_file = nil
+      init_vars
 
       controller = args.shift
       actions = args
@@ -34,19 +30,41 @@ module Specfac
       end
     end
 
+    #-----
+
     map %w[--version -v] => :__print_version
     desc "--version, -v", "Shows the currently active version of Specfactor."
     def __print_version
       puts Specfac.show_v
     end
 
+    #-----
+    #
+    desc "setup [types] 'i.e. setup factory_bot'", "Generates RailsHelper configuration files for 'factory_bot' and 'database_cleaner'."
+    def setup(*args)
+      init_vars
+      @working_file = "#{@dir_support}/specfac_config.rb"
+      setup_types = args
+      setup_types != nil ? setup_types.each {|type| opener("support", SupportModule.public_send(type.to_sym))} : nil
+    end
+
     ######## UTILITY METHODS
     #
 
     no_commands do
+      def init_vars
+        @working_dirs = ["spec", "controllers", "factories", "support"]
+        @dir_support = "#{@working_dirs[0]}}/#{@working_dirs[3]}/specfac"
+        @dir_controllers = "#{@working_dirs[0]}/#{@working_dirs[1]}"
+        @dir_factories = "#{@working_dirs[0]}/#{@working_dirs[2]}"
+        # @protected_methods = %w(define_utils_methods_params si si_ca pl)
+        @found_methods = SpecModule.methods(false).to_a.map {|item| item.to_s}
+        @available_methods = @found_methods # @found_methods - @protected_methods
+        @working_file = nil
+      end
+
       def create_directories(*dirs)
         dirs.each {|dir| Dir.mkdir(dir) if !Dir.exists?(dir) }
-
       end
 
       def pull_src(controller, actions, options=nil)
