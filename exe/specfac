@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 
 require "specfac"
-SpecFac::CLI.start(ARGV)
+Specfac::CLI.start(ARGV)

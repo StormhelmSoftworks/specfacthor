@@ -1,8 +1,9 @@
 require 'specfac'
+require 'specfac/version'
 require 'thor'
 require 'spec_module'
 require 'factory_module'
-module SpecFac
+module Specfac
   class CLI < Thor
     include Utils
     include SpecModule
@@ -25,17 +26,18 @@ module SpecFac
       controller = args.shift
       actions = args
 
-
-
-
       if controller
         sanitize(controller, actions, options[:f])
       else
         puts "Please provide a controller name."
         exit
       end
+    end
 
-
+    map %w[--version -v] => :__print_version
+    desc "--version, -v", "Shows the currently active version of Specfactor."
+    def __print_version
+      puts Specfac.show_v
     end
 
     ######## UTILITY METHODS
@@ -65,7 +67,7 @@ module SpecFac
 
         if options
           puts
-          @working_file = "#{@dir_factories}/#{controller.downcase}_spec.rb"
+          @working_file = "#{@dir_factories}/#{Utils.pluralize(controller.downcase)}.rb"
           opener("factory", FactoryModule.create)
           opener("end", nil)
         end
