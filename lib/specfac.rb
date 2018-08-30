@@ -3,11 +3,13 @@ require 'specfac/version'
 require 'thor'
 require 'spec_module'
 require 'factory_module'
+require 'support_module'
 module Specfac
   class CLI < Thor
     include Utils
     include SpecModule
     include FactoryModule
+    include SupportModule
     attr_accessor :dir_controllers, :dir_factories, :working_dirs, :working_file, :protected_methods, :available_methods, :found_methods
 
     ######### AVAILABLE COMMANDS
