@@ -10,7 +10,7 @@ module Specfac
     include SpecModule
     include FactoryModule
     include SupportModule
-    attr_accessor :dir_controllers, :dir_factories, :working_dirs, :working_file, :protected_methods, :available_methods, :found_methods
+    attr_accessor :dir_support, :dir_controllers, :dir_factories, :working_dirs, :working_file, :available_methods
 
     ######### AVAILABLE COMMANDS
     desc "generate [controller] [actions]", "Generates tests for specified actions. Separate actions with spaces."
@@ -43,9 +43,11 @@ module Specfac
     desc "setup [types] 'i.e. setup factory_bot'", "Generates RailsHelper configuration files for 'factory_bot' and 'database_cleaner'."
     def setup(*args)
       init_vars
-      @working_file = "#{@dir_support}/specfac_config.rb"
-      setup_types = args
-      setup_types != nil ? setup_types.each {|type| opener("support", SupportModule.public_send(type.to_sym))} : nil
+      @working_file = "#{@dir_support}/specfac/config.rb"
+      args != nil ? args.each {|arg| opener("support", SupportModule.public_send(arg.to_sym))} : nil
+      puts "Generating support: #{@working_file}"
+      sleep 1
+      puts "> completed"
     end
 
     ######## UTILITY METHODS
@@ -54,13 +56,12 @@ module Specfac
     no_commands do
       def init_vars
         @working_dirs = ["spec", "controllers", "factories", "support"]
-        @dir_support = "#{@working_dirs[0]}}/#{@working_dirs[3]}/specfac"
+        @dir_support = "#{@working_dirs[0]}/#{@working_dirs[3]}"
         @dir_controllers = "#{@working_dirs[0]}/#{@working_dirs[1]}"
         @dir_factories = "#{@working_dirs[0]}/#{@working_dirs[2]}"
-        # @protected_methods = %w(define_utils_methods_params si si_ca pl)
-        @found_methods = SpecModule.methods(false).to_a.map {|item| item.to_s}
-        @available_methods = @found_methods # @found_methods - @protected_methods
+        @available_methods = SpecModule.methods(false).to_a.map {|item| item.to_s}
         @working_file = nil
+        create_directories(@working_dirs[0], @dir_controllers, @dir_factories, @dir_support, "#{@dir_support}/specfac")
       end
 
       def create_directories(*dirs)
@@ -68,7 +69,7 @@ module Specfac
       end
 
       def pull_src(controller, actions, options=nil)
-        create_directories(@working_dirs[0], @dir_controllers, @dir_factories)
+
         @working_file = "#{@dir_controllers}/#{controller.downcase}_controller_spec.rb"
         # Spec tests
 
