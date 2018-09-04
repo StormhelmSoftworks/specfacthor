@@ -31,7 +31,11 @@ Or install it yourself as:
 
 In terminal, type:
 
-    specfac generate [controller] [actions]
+    specfac generate -options <controller> <actions>
+    
+   or
+    
+    specfac g -options <controller> <actions>
     
 __[controller]__ should be the name of the controller you'd like to generate tests for
 
@@ -43,13 +47,35 @@ An example usage for specific tests:
     
 An example for all available tests:
     
-    specfac generate participants ALL
+    specfac g participants ALL
     
 An example generating a FactoryBot factory for the controller:
 
     specfac generate -f dogs ALL
     
+An example generating Capybara End-to-End/Feature tests for the controller:
+
+    specfac g -e cats ALL
+    
+Or generate both E2E tests and the Factory:
+
+    specfac g -f -e dragons index show
+    
 Currently, tests can be generated for :index, :show, :new, :create, :edit, :update, and :destroy.
+
+## Other Commands
+
+To generate configuration settings for DatabaseCleaner and FactoryBot:
+
+    specfac setup factory_bot
+    
+    specfac setup database_cleaner
+    
+To print the version number for Specfactor:
+
+    specfac -v
+    
+    specfac --version
 
 ## Contributing
 
