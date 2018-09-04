@@ -4,26 +4,41 @@ require 'thor'
 require 'spec_module'
 require 'factory_module'
 require 'support_module'
+require 'e2e_module'
 module Specfac
   class CLI < Thor
     include Utils
     include SpecModule
     include FactoryModule
     include SupportModule
-    attr_accessor :dir_support, :dir_controllers, :dir_factories, :working_dirs, :working_file, :available_methods
+    include E2eModule
+
+    attr_accessor :dir_support, :dir_controllers, :dir_factories, :dir_features, :working_dirs, :working_file, :available_methods
 
     ######### AVAILABLE COMMANDS
+
+    # desc "test_command", "a test command for testing"
+    # option :f, :type => :boolean
+    # option :e, :type => :boolean
+    # def test_command(*args)
+    #   puts options
+    #   puts args
+    # end
+
+    # -----
+
     desc "generate [controller] [actions]", "Generates tests for specified actions. Separate actions with spaces."
     method_option :aliases => "g"
-    option :f, :type => :boolean
+    option :f, :type => :boolean #factory
+    option :e, :type => :boolean #end to end tests
     def generate(*args)
-      init_vars
+      init_vars(options)
 
       controller = args.shift
       actions = args
 
       if controller
-        sanitize(controller, actions, options[:f])
+        sanitize(controller, actions, options)
       else
         puts "Please provide a controller name."
         exit
@@ -44,7 +59,7 @@ module Specfac
     def setup(*args)
       init_vars
       @working_file = "#{@dir_support}/specfac/config.rb"
-      args != nil ? args.each {|arg| opener("support", SupportModule.public_send(arg.to_sym))} : nil
+      args != nil ? args.each {|arg| opener("support", SupportModule.public_send(arg.to_sym), "a")} : nil
       puts "Generating support: #{@working_file}"
       sleep 1
       puts "> completed"
@@ -54,14 +69,29 @@ module Specfac
     #
 
     no_commands do
-      def init_vars
-        @working_dirs = ["spec", "controllers", "factories", "support"]
+      def init_vars(options=nil)
+        @working_dirs = ["spec", "controllers", "factories", "support", "features"]
         @dir_support = "#{@working_dirs[0]}/#{@working_dirs[3]}"
         @dir_controllers = "#{@working_dirs[0]}/#{@working_dirs[1]}"
         @dir_factories = "#{@working_dirs[0]}/#{@working_dirs[2]}"
+        @dir_features = "#{@working_dirs[0]}/#{@working_dirs[4]}"
         @available_methods = SpecModule.methods(false).to_a.map {|item| item.to_s}
         @working_file = nil
-        create_directories(@working_dirs[0], @dir_controllers, @dir_factories, @dir_support, "#{@dir_support}/specfac")
+
+        create_directories(@working_dirs[0])
+
+        if options
+          create_directories(@dir_controllers)
+          if options[:f]
+            create_directories(@dir_factories)
+          end
+          if options[:e]
+            create_directories(@dir_features)
+          end
+        else
+          create_directories(@dir_support, "#{@dir_support}/specfac")
+        end
+
       end
 
       def create_directories(*dirs)
@@ -74,43 +104,58 @@ module Specfac
         # Spec tests
 
         opener(
-            "header",
-            ["require 'rails_helper'","RSpec.describe #{controller.capitalize}Controller, type: :controller do"]
+            "spec",
+            ["require 'rails_helper'","RSpec.describe #{controller.capitalize}Controller, type: :controller do"],
+            "w"
         )
 
         Utils.define_utils_methods_params(controller)
-        actions != nil ? actions.each {|action| opener("body", SpecModule.public_send(action.to_sym))} : nil
-        opener("end", "end")
+        actions != nil ? actions.each {|action| opener("tests", SpecModule.public_send(action.to_sym), "a")} : nil
+        opener("end", "end", "a")
 
         # Factories
 
         if options
-          puts
-          @working_file = "#{@dir_factories}/#{Utils.pluralize(controller.downcase)}.rb"
-          opener("factory", FactoryModule.create)
-          opener("end", nil)
+          if options[:f]
+            puts
+            @working_file = "#{@dir_factories}/#{Utils.pluralize(controller.downcase)}.rb"
+            opener("factory", FactoryModule.create, "w")
+            opener("end", nil, "a")
+          end
+
+          # end to end tests
+
+          if options[:e]
+            puts
+            @working_file = "#{@dir_features}/#{Utils.pluralize(controller.downcase)}_spec.rb"
+            opener("feature",
+                   ["require 'rails_helper'", "describe 'navigation' do"],
+                   "w")
+            actions != nil ? actions.each {|action| opener("tests", E2eModule.public_send(action.to_sym), "a")} : nil
+            opener("end", "end", "a")
+          end
         end
+
 
       end
 
-      def opener(mode, lines)
+      def opener(mode, lines, open_type)
         filer = lambda do |type, output|
           File.open(@working_file, type) { |handle| handle.puts output}
         end
-        if mode == "header"
-          puts "Creating spec: #{@working_file}."
-          filer.call("w", nil)
+
+        if mode == "spec" || mode == "feature"
+          puts "Creating #{mode}: #{@working_file}."
+          filer.call(open_type, nil)
           lines.each do |item|
             filer.call("a", item)
           end
-        elsif mode == "factory"
-          puts "Creating factory: #{@working_file}."
-          filer.call("w", lines)
         elsif mode == "end"
           puts "> completed"
-          filer.call("a", lines)
+          filer.call(open_type, lines)
         else
-          filer.call("a", lines)
+          puts "Creating #{mode}: #{@working_file}"
+          filer.call(open_type, lines)
         end
       end
 
