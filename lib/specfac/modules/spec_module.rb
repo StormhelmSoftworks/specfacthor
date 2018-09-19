@@ -1,4 +1,4 @@
-require 'specfac_utils'
+require_relative '../utils'
 
 module SpecModule
   include Utils
