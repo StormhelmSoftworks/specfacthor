@@ -1,10 +1,35 @@
-require 'specfac'
-require 'specfac/version'
+require 'json'
+require 'fileutils'
 require 'thor'
-require 'spec_module'
-require 'factory_module'
-require 'support_module'
-require 'e2e_module'
+gem_path = 'specfac'
+mod_path = 'modules'
+lib_path = "/lib/#{gem_path}"
+abs_dir_path = File.join(File.dirname(File.dirname(File.absolute_path(__FILE__))))
+path_join = lambda { |dir_path, file_path| dir_path + file_path }
+options = JSON.parse(File.read(path_join.call(abs_dir_path,"#{lib_path}/options.json")))
+selector = options['path']
+
+
+actual_path =  if selector == 'root'
+    gem_path
+  else
+    selector = selector[0] == "/" ? selector : "/#{selector}"
+    $LOAD_PATH.unshift(selector)
+
+    Dir.mkdir(selector) if !Dir.exists?(selector)
+    FileUtils.cp_r(path_join.call(abs_dir_path,"#{lib_path}/#{mod_path}/"), selector)
+
+    selector
+  end
+
+
+require "#{gem_path}"
+require "#{gem_path}/version"
+require "#{actual_path}/#{mod_path}/spec_module"
+require "#{actual_path}/#{mod_path}/factory_module"
+require "#{actual_path}/#{mod_path}/support_module"
+require "#{actual_path}/#{mod_path}/e2e_module"
+
 module Specfac
   class CLI < Thor
     include Utils
@@ -26,6 +51,10 @@ module Specfac
     # end
 
     # -----
+    #
+    #
+
+
 
     desc "generate [controller] [actions]", "Generates tests for specified actions. Separate actions with spaces."
     method_option :aliases => "g"
