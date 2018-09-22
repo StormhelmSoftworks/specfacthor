@@ -22,6 +22,7 @@ actual_path =  if selector == 'root'
     selector
   end
 
+#### After directory preparation, require modules ####
 
 require "#{gem_path}"
 require "#{gem_path}/version"
@@ -55,6 +56,11 @@ module Specfac
     #
 
 
+    desc "extract [destination]", "Extracts the Specfactor base modules to the destination specified for customization"
+    method_option :aliases => "ex"
+    def extract(dest)
+
+    end
 
     desc "generate [controller] [actions]", "Generates tests for specified actions. Separate actions with spaces."
     method_option :aliases => "g"
@@ -98,6 +104,10 @@ module Specfac
     #
 
     no_commands do
+      def self.inject_paths(*args)
+        puts args.inspect
+      end
+
       def init_vars(options=nil)
         @working_dirs = ["spec", "controllers", "factories", "support", "features"]
         @dir_support = "#{@working_dirs[0]}/#{@working_dirs[3]}"
@@ -210,3 +220,7 @@ module Specfac
 
   end
 end
+
+include Specfac
+
+CLI.inject_paths(gem_path, lib_path, mod_path, abs_dir_path, options, path_join)
