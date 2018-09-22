@@ -2,6 +2,13 @@
 
 Specfactor is a gem that generates commonly used tests for commonly used controller actions.
 
+<p style="margin: 0 auto">
+  <img src="https://img.shields.io/badge/version-0.1.8-green.svg">
+  <img src="https://img.shields.io/badge/license-MIT-blue.svg">
+  <img src="https://img.shields.io/badge/downloads-1000+-red.svg">
+   <img src="https://img.shields.io/badge/development-PRs Welcome-green.svg">
+</p>
+
 ## Installation
 
 Specfactor is dependent on these gems: 
@@ -62,6 +69,44 @@ Or generate both E2E tests and the Factory:
     specfac g -f -e dragons index show
     
 Currently, tests can be generated for :index, :show, :new, :create, :edit, :update, and :destroy.
+
+## Customizing Generated Tests
+
+Specfactor allows for customization of modules used to generate tests. First, type:
+
+    specfac extract <path to copy modules to>
+    
+Please indicate a path such as __Users/YOUR NAME/Desktop__. 
+Do not include a beginning or ending "/". If you run into issues where Specfactor stops executing, it may be due to an invalid path supplied in the __extract__ command. 
+If this is the case, you can access the path variable directly by going to your Ruby directory and
+modifying the options.json file.
+
+My directory is at __.rvm/gems/ruby-2.4.4/gems/specfactor/lib/specfac/options.json__
+
+Here is an example:
+
+    specfac extract Users/viktharien/Desktop
+    
+This will create a <code>modules</code> folder on my desktop. Inside the folder will be five ruby files:
+
+    spec_module.rb
+    factory_module.rb
+    support_module.rb
+    e2e_module.rb
+    utils.rb
+    
+<code>spec_module</code> contains the templates for controller tests.
+
+<code>factory_module</code> contains the templates for FactoryBot factories.
+
+<code>support_module</code> contains the templates for DatabaseCleaner and FactoryBot configuration.
+
+<code>e2e_module</code> contains the templates for Capybara tests.
+
+<code>utils</code> contains utility code used by the templates, so don't modify or else things will break.
+
+Replace or modify the code in these files and the next time you use Specfactor to generate tests,
+your modifications will be used.
 
 ## Other Commands
 
