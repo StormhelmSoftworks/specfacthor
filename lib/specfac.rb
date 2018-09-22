@@ -18,9 +18,10 @@ actual_path =  if selector == 'root'
     selector = selector[0] == "/" ? selector : "/#{selector}"
     $LOAD_PATH.unshift(selector)
 
-    Dir.mkdir(selector) if !Dir.exists?(selector)
-    FileUtils.cp_r(path_join.call(abs_dir_path,"#{lib_path}/#{mod_path}/"), selector)
-
+    if !Dir.exists?("#{selector}/#{mod_path}")
+      Dir.mkdir("#{selector}/#{mod_path}")
+      FileUtils.cp_r(path_join.call(abs_dir_path,"#{lib_path}/#{mod_path}/"), selector)
+    end
     selector
   end
 
