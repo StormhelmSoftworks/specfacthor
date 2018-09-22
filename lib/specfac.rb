@@ -1,6 +1,7 @@
 require 'json'
 require 'fileutils'
 require 'thor'
+require 'thor/group'
 gem_path = 'specfac'
 mod_path = 'modules'
 lib_path = "/lib/#{gem_path}"
@@ -34,6 +35,7 @@ require "#{actual_path}/#{mod_path}/e2e_module"
 
 module Specfac
   class CLI < Thor
+    include Thor::Actions
     include Utils
     include SpecModule
     include FactoryModule
@@ -69,6 +71,8 @@ module Specfac
     def extract(dest)
       @paths = $paths
       @paths[:options]["path"] = dest
+      puts "Setting extract destination..."
+      create_file(@paths[:options_path])
       opener(nil, @paths[:options].to_json, "w", @paths[:options_path])
     end
 
@@ -106,10 +110,8 @@ module Specfac
     def setup(*args)
       init_vars
       @working_file = "#{@dir_support}/specfac/config.rb"
+      create_file(@working_file)
       args != nil ? args.each {|arg| opener("support", SupportModule.public_send(arg.to_sym), "a")} : nil
-      puts "Generating support: #{@working_file}"
-      sleep 1
-      puts "> completed"
     end
 
     ######## UTILITY METHODS
@@ -150,7 +152,7 @@ module Specfac
 
         @working_file = "#{@dir_controllers}/#{controller.downcase}_controller_spec.rb"
         # Spec tests
-
+        create_file(@working_file)
         opener(
             "spec",
             ["require 'rails_helper'","RSpec.describe #{controller.capitalize}Controller, type: :controller do"],
@@ -165,8 +167,9 @@ module Specfac
 
         if options
           if options[:f]
-            puts
+
             @working_file = "#{@dir_factories}/#{Utils.pluralize(controller.downcase)}.rb"
+            create_file(@working_file)
             opener("factory", FactoryModule.create, "w")
             opener("end", nil, "a")
           end
@@ -174,8 +177,8 @@ module Specfac
           # end to end tests
 
           if options[:e]
-            puts
             @working_file = "#{@dir_features}/#{Utils.pluralize(controller.downcase)}_spec.rb"
+            create_file(@working_file)
             opener("feature",
                    ["require 'rails_helper'", "describe 'navigation' do"],
                    "w")
