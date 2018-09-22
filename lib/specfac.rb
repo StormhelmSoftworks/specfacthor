@@ -6,7 +6,8 @@ mod_path = 'modules'
 lib_path = "/lib/#{gem_path}"
 abs_dir_path = File.join(File.dirname(File.dirname(File.absolute_path(__FILE__))))
 path_join = lambda { |dir_path, file_path| dir_path + file_path }
-options = JSON.parse(File.read(path_join.call(abs_dir_path,"#{lib_path}/options.json")))
+options_path = path_join.call(abs_dir_path,"#{lib_path}/options.json")
+options = JSON.parse(File.read(options_path))
 selector = options['path']
 
 
@@ -39,7 +40,14 @@ module Specfac
     include SupportModule
     include E2eModule
 
-    attr_accessor :dir_support, :dir_controllers, :dir_factories, :dir_features, :working_dirs, :working_file, :available_methods
+    attr_accessor :dir_support,
+                  :dir_controllers,
+                  :dir_factories,
+                  :dir_features,
+                  :working_dirs,
+                  :working_file,
+                  :available_methods,
+                  :paths
 
     ######### AVAILABLE COMMANDS
 
@@ -59,8 +67,12 @@ module Specfac
     desc "extract [destination]", "Extracts the Specfactor base modules to the destination specified for customization"
     method_option :aliases => "ex"
     def extract(dest)
-
+      @paths = $paths
+      @paths[:options]["path"] = dest
+      opener(nil, @paths[:options].to_json, "w", @paths[:options_path])
     end
+
+    # -----
 
     desc "generate [controller] [actions]", "Generates tests for specified actions. Separate actions with spaces."
     method_option :aliases => "g"
@@ -104,9 +116,6 @@ module Specfac
     #
 
     no_commands do
-      def self.inject_paths(*args)
-        puts args.inspect
-      end
 
       def init_vars(options=nil)
         @working_dirs = ["spec", "controllers", "factories", "support", "features"]
@@ -178,22 +187,19 @@ module Specfac
 
       end
 
-      def opener(mode, lines, open_type)
+      def opener(mode, lines, open_type, file = @working_file)
         filer = lambda do |type, output|
-          File.open(@working_file, type) { |handle| handle.puts output}
+          File.open(file, type) { |handle| handle.puts output}
         end
 
         if mode == "spec" || mode == "feature"
-          puts "Creating #{mode}: #{@working_file}."
           filer.call(open_type, nil)
           lines.each do |item|
             filer.call("a", item)
           end
         elsif mode == "end"
-          puts "> completed"
           filer.call(open_type, lines)
         else
-          puts "Creating #{mode}: #{@working_file}"
           filer.call(open_type, lines)
         end
       end
@@ -221,6 +227,17 @@ module Specfac
   end
 end
 
-include Specfac
+$paths = {
+    :gem_path => gem_path,
+    :lib_path => lib_path,
+    :mod_path => mod_path,
+    :abs_path => abs_dir_path,
+    :options_path => options_path,
+    :options => options,
+    :path_join => path_join,
+    :selector => selector
+}
 
-CLI.inject_paths(gem_path, lib_path, mod_path, abs_dir_path, options, path_join)
+
+
+
